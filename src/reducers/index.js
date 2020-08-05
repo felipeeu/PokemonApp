@@ -1,7 +1,37 @@
+import { combineReducers } from "redux";
 
-import {combineReducers} from 'redux';
+import { GET_POKEMONS, GET_POKEMON_BY_ID, RESET_STORE } from "../actions/index";
+
+const initialState = {
+  tenPokemons: [],
+ 
+};
+
+const pokemons = (state = initialState, action) => {
+  
+  switch (action.type) {
+    case GET_POKEMONS:
+      return {
+        ...state,
+        tenPokemons: state.tenPokemons.concat([action.payload])
+      };
+
+    case GET_POKEMON_BY_ID:
+      return {
+        ...state,
+        pokemon: action.payload
+      };
+      case RESET_STORE: {
+        return initialState
+      }
+
+
+    default:
+      return state;
+  }
+};
 
 const Reducers = combineReducers({
-    
+  pokemons
 });
-export default Reducers
+export default Reducers;

@@ -1,36 +1,24 @@
 import React, { useEffect, useState } from "react";
-// import logo from "./logo.svg";
-// import "./App.css";
-import axios from "axios";
-import { withRouter,Route, Switch } from "react-router";
+import { withRouter, Route, Switch } from "react-router";
 import Home from "./Home";
 import Favorites from "./Favorites";
+import { connect } from "react-redux";
+import { getPokemons, resetStore } from "../actions/index";
 
-function App() {
-  const [payloadPokemon, setPayloadPokemon] = useState([]);
+function App({ tenPokemons, getPokemons ,resetStore }) {
+
   const [offset, setOffset] = useState(0);
+
   useEffect(() => {
-    axios
-      .get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=10`)
-      .then(response =>
-        response ? setPayloadPokemon(response.data.results) : null
-      );
+    getPokemons(offset, 10);
+    resetStore();
   }, [offset]);
 
+  console.log("PROPS", tenPokemons);
   return (
-    // <div className="App">
-    //   {payloadPokemon &&
-    //     payloadPokemon.map((pokemon, idx) => <div key={idx}>{pokemon.name}</div>)}
-    //     <button onClick= {()=> setOffset(offset+ 10)  }>previous</button>
-    //     <button onClick= {()=> setOffset(offset +10)} >next</button>
-    // </div>
     <Switch>
       <Route exact path="/">
-        <Home
-          payloadPokemon={payloadPokemon}
-          offset={offset}
-          setOffset={setOffset}
-        />
+        <Home tenPokemons={tenPokemons} offset={offset} setOffset={setOffset} />
       </Route>
       <Route path="/favorites">
         <Favorites />
@@ -39,4 +27,16 @@ function App() {
   );
 }
 
-export default  withRouter(App);
+const mapStateToProps = store => ({
+  tenPokemons: store.pokemons.tenPokemons,
+  pokemon: store.pokemons.pokemon
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getPokemons: (limit, offset) => dispatch(getPokemons(limit, offset)),
+    resetStore: () => dispatch(resetStore())
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
