@@ -1,17 +1,15 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
+import { connect } from "react-redux";
+import {addToFavorites} from "../actions/index"
 
 function Copyright() {
   return (
@@ -58,19 +56,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Home = ({ tenPokemons, setOffset, offset }) => {
+const Home = ({ tenPokemons, setOffset, offset , addToFavorites }) => {
   const classes = useStyles();
 
   return (
     <React.Fragment>
-      <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Catálogo de Pokemons
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
@@ -99,7 +89,7 @@ const Home = ({ tenPokemons, setOffset, offset }) => {
                     onClick={() =>
                       setOffset(offset === 0 || !offset ? 0 : offset - 10)
                     }
-                    variant="contained"
+                    variant="outlined"
                     color="primary"
                   >
                     Previous
@@ -130,7 +120,7 @@ const Home = ({ tenPokemons, setOffset, offset }) => {
                       image={`${pokemon.sprites.other.dream_world.front_default}`}
                       title={pokemon.name}
                     />
-                    <CardContent className={classes.cardContent}>
+                    {/* <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
                         {pokemon.name}
                       </Typography>
@@ -138,13 +128,13 @@ const Home = ({ tenPokemons, setOffset, offset }) => {
                         This is a media card. You can use this section to
                         describe the content.
                       </Typography>
-                    </CardContent>
+                    </CardContent> */}
                     <CardActions>
                       <Button size="small" color="primary">
                         View
                       </Button>
-                      <Button size="small" color="primary">
-                        Edit
+                      <Button onClick={()=> addToFavorites(pokemon)}  size="small" color="primary">
+                        Adicionar aos Favoritos
                       </Button>
                     </CardActions>
                   </Card>
@@ -168,10 +158,22 @@ const Home = ({ tenPokemons, setOffset, offset }) => {
         </Typography>
         <Copyright />
       </footer>
-     
     </React.Fragment>
   );
 };
 
+const mapStateToProps = store => ({
+  tenPokemons: store.pokemons.tenPokemons,
+  pokemon: store.pokemons.pokemon,
+  favorites: store.pokemons.favorites
+});
 
-export default Home;
+const mapDispatchToProps = dispatch => {
+  return {
+    
+    addToFavorites:(pokemon) => dispatch(addToFavorites(pokemon)),
+    
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
