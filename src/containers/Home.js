@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { connect } from "react-redux";
 import { addToFavorites, selectPokemon } from "../actions/index";
+import { withRouter } from "react-router";
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -47,7 +48,8 @@ const Home = ({
   setOffset,
   offset,
   addToFavorites,
-  selectPokemon
+  selectPokemon,
+  history
 }) => {
   const classes = useStyles();
 
@@ -113,7 +115,10 @@ const Home = ({
                     />
                     <CardActions>
                       <Button
-                        onClick={() => selectPokemon(pokemon.id)}
+                        onClick={() => {
+                          selectPokemon(pokemon.id);
+                          history.push(`/details/${pokemon.id}`);
+                        }}
                         size="small"
                         color="primary"
                       >
@@ -150,4 +155,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

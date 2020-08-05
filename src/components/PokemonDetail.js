@@ -18,7 +18,7 @@ const PokemonDetail = ({ pokemon }) => {
       </Grid>
       <Grid>
         <Typography>Tipos: </Typography>
-        {pokemon && pokemon.map(type => <span>{type}</span>)}{" "}
+        {/* {pokemon && pokemon.map(type => <span>{type}</span>)}{" "} */}
       </Grid>
     </Grid>
   );

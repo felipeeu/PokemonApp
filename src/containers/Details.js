@@ -24,7 +24,7 @@ const isEmpty = obj => {
 
 const Details = ({ pokemon }) => {
   const classes = useStyles();
-
+console.log ( "DETAILS" ,pokemon)
   return (
     <React.Fragment>
       {!isEmpty(pokemon) ? (

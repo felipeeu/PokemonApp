@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Home from "./Home";
 import Favorites from "./Favorites";
 import Search from "./Search";
-import 
+import Details from "./Details";
 import { connect } from "react-redux";
 import {
   getPokemons,
@@ -20,7 +20,6 @@ import Button from "@material-ui/core/Button";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { fade, makeStyles } from "@material-ui/core/styles";
-
 
 const appStyles = makeStyles(theme => ({
   root: {
@@ -79,7 +78,8 @@ function App({
   filteredByName,
   favorites,
   resetStore,
-  history
+  history,
+  selectedPokemon
 }) {
   const classes = appStyles();
   const [offset, setOffset] = useState(0);
@@ -89,7 +89,7 @@ function App({
     getPokemons(offset, 10);
     resetStore();
   }, [offset]);
-
+  console.log("SELECTED POKE: ", selectedPokemon);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -147,8 +147,8 @@ function App({
         <Route path="/favorites">
           <Favorites favorites={favorites} />
         </Route>
-        <Route path="/detail/:id">
-          </>
+        <Route path="/details/:id">
+          <Details pokemon={selectedPokemon} />
         </Route>
         <Route path="/search">
           <Search pokemon={filteredByName || {}} />
@@ -174,7 +174,8 @@ function App({
 const mapStateToProps = store => ({
   tenPokemons: store.pokemons.tenPokemons,
   favorites: store.pokemons.favorites,
-  filteredByName: store.pokemons.pokemonByName
+  filteredByName: store.pokemons.pokemonByName,
+  selectedPokemon: store.pokemons.pokemonSelected
 });
 
 const mapDispatchToProps = dispatch => {

@@ -14,7 +14,7 @@ const initialState = {
   tenPokemons: [],
   favorites: [],
   pokemonByName: {},
-  pokemonsSelected: {}
+  pokemonSelected: {}
 };
 
 const pokemons = (state = initialState, action) => {
