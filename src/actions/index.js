@@ -1,6 +1,6 @@
 import axios from "axios";
 export const GET_POKEMONS = "GET_POKEMONS";
-export const GET_POKEMON_BY_ID = "GET_POKEMON_BY_ID";
+export const GET_POKEMON_BY_NAME= "GET_POKEMON_BY_NAME";
 export const RESET_STORE = "RESET_STORE";
 export const GET_FAVORITES = "GET_FAVORITES ";
 export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
@@ -25,11 +25,11 @@ export const getPokemons = (offset, limit) => {
   };
 };
 
-export const getPokemonById = id => {
+export const getPokemonByName = name => {
   return dispatch => {
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then(payload => {
+    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then(payload => {
       dispatch({
-        type: GET_POKEMON_BY_ID,
+        type: GET_POKEMON_BY_NAME,
         payload: payload.data
       });
     });

@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 
-import { GET_POKEMONS, GET_POKEMON_BY_ID, RESET_STORE , GET_FAVORITES ,ADD_TO_FAVORITES , DELETE_FROM_FAVORITES } from "../actions/index";
+import { GET_POKEMONS, GET_POKEMON_BY_NAME, RESET_STORE , GET_FAVORITES ,ADD_TO_FAVORITES , DELETE_FROM_FAVORITES } from "../actions/index";
 
 const initialState = {
   tenPokemons: [],
-  favorites: []
+  favorites: [],
+  pokemonByName:{}
+  
  
 };
 
@@ -17,10 +19,9 @@ const pokemons = (state = initialState, action) => {
         tenPokemons: state.tenPokemons.concat([action.payload])
       };
 
-    case GET_POKEMON_BY_ID:
+    case GET_POKEMON_BY_NAME:
       return {
-        ...state,
-        pokemon: action.payload
+        pokemonByName:action.payload
       };
 
       case GET_FAVORITES: {

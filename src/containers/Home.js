@@ -11,18 +11,7 @@ import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
 import {addToFavorites} from "../actions/index"
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -58,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 
 const Home = ({ tenPokemons, setOffset, offset , addToFavorites }) => {
   const classes = useStyles();
-
+console.log("HOMETEN", tenPokemons)
   return (
     <React.Fragment>
       <main>
@@ -113,12 +102,12 @@ const Home = ({ tenPokemons, setOffset, offset , addToFavorites }) => {
           <Grid container spacing={4}>
             {tenPokemons &&
               tenPokemons.map(pokemon => (
-                <Grid item key={pokemon.name} xs={12} sm={6} md={4}>
+                <Grid item key={pokemon.id} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
                       image={`${pokemon.sprites.other.dream_world.front_default}`}
-                      title={pokemon.name}
+                      // title={pokemon.name}
                     />
                     {/* <CardContent className={classes.cardContent}>
                       <Typography gutterBottom variant="h5" component="h2">
@@ -144,20 +133,7 @@ const Home = ({ tenPokemons, setOffset, offset , addToFavorites }) => {
         </Container>
       </main>
       {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-        <Copyright />
-      </footer>
+     
     </React.Fragment>
   );
 };
