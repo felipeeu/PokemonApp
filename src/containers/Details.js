@@ -8,37 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Loader from "../components/Loader"
+import PokemonDetails from "../components/PokemonDetail"
 
 const useStyles = makeStyles(theme => ({
-  icon: {
-    marginRight: theme.spacing(2)
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6)
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4)
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8)
-  },
-  card: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column"
-  },
-  cardMedia: {
-    paddingTop: "56.25%" // 16:9
-  },
-  cardContent: {
-    flexGrow: 1
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6)
-  },
+  
   
 }));
 
@@ -49,7 +22,7 @@ const isEmpty = obj => {
   return true;
 };
 
-const Search = ({ pokemon }) => {
+const Details = ({ pokemon }) => {
   const classes = useStyles();
 
   return (
@@ -75,23 +48,7 @@ const Search = ({ pokemon }) => {
             <Grid container spacing={4}>
               <Grid item key={pokemon && pokemon.name} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image={
-                      `${pokemon.sprites &&
-                        pokemon.sprites.other.dream_world.front_default}` || ""
-                    }
-                    title={pokemon && pokemon.name}
-                  />
-
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions>
+                  <PokemonDetails pokemon={pokemon}/>
                 </Card>
               </Grid>
             </Grid>
@@ -104,4 +61,4 @@ const Search = ({ pokemon }) => {
   );
 };
 
-export default Search;
+export default Details;

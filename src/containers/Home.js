@@ -7,11 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
-import {addToFavorites} from "../actions/index"
-
-
+import { addToFavorites, selectPokemon } from "../actions/index";
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -45,9 +42,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Home = ({ tenPokemons, setOffset, offset , addToFavorites }) => {
+const Home = ({
+  tenPokemons,
+  setOffset,
+  offset,
+  addToFavorites,
+  selectPokemon
+}) => {
   const classes = useStyles();
-console.log("HOMETEN", tenPokemons)
+
   return (
     <React.Fragment>
       <main>
@@ -107,22 +110,20 @@ console.log("HOMETEN", tenPokemons)
                     <CardMedia
                       className={classes.cardMedia}
                       image={`${pokemon.sprites.other.dream_world.front_default}`}
-                      // title={pokemon.name}
                     />
-                    {/* <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {pokemon.name}
-                      </Typography>
-                      <Typography>
-                        This is a media card. You can use this section to
-                        describe the content.
-                      </Typography>
-                    </CardContent> */}
                     <CardActions>
-                      <Button size="small" color="primary">
-                        View
+                      <Button
+                        onClick={() => selectPokemon(pokemon.id)}
+                        size="small"
+                        color="primary"
+                      >
+                        Detalhes
                       </Button>
-                      <Button onClick={()=> addToFavorites(pokemon)}  size="small" color="primary">
+                      <Button
+                        onClick={() => addToFavorites(pokemon)}
+                        size="small"
+                        color="primary"
+                      >
                         Adicionar aos Favoritos
                       </Button>
                     </CardActions>
@@ -132,8 +133,6 @@ console.log("HOMETEN", tenPokemons)
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-     
     </React.Fragment>
   );
 };
@@ -146,9 +145,8 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    
-    addToFavorites:(pokemon) => dispatch(addToFavorites(pokemon)),
-    
+    addToFavorites: pokemon => dispatch(addToFavorites(pokemon)),
+    selectPokemon: pokemonId => dispatch(selectPokemon(pokemonId))
   };
 };
 

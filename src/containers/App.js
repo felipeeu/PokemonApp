@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { withRouter, Route, Switch } from "react-router";
+import { Link } from "react-router-dom";
 import Home from "./Home";
 import Favorites from "./Favorites";
-import Search from "./Search"
+import Search from "./Search";
+import 
 import { connect } from "react-redux";
 import {
   getPokemons,
@@ -18,6 +20,7 @@ import Button from "@material-ui/core/Button";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { fade, makeStyles } from "@material-ui/core/styles";
+
 
 const appStyles = makeStyles(theme => ({
   root: {
@@ -87,23 +90,16 @@ function App({
     resetStore();
   }, [offset]);
 
-  console.log("POKEBYNAME", filteredByName);
-
   return (
     <React.Fragment>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Catálogo de Pokemons
-          </Typography>
-          <Button
-            onClick={() => history.push("/favorites")}
-            variant="contained"
-            color="secondary"
-          >
-            favoritos
-          </Button>
+          <Link to={"/"}>
+            <Typography variant="h6" color="secondary" noWrap>
+              Catálogo de Pokemons
+            </Typography>
+          </Link>
 
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -133,6 +129,13 @@ function App({
           </Button>
         </Toolbar>
       </AppBar>
+      <Button
+        onClick={() => history.push("/favorites")}
+        variant="contained"
+        color="secondary"
+      >
+        favoritos
+      </Button>
       <Switch>
         <Route exact path="/">
           <Home
@@ -143,6 +146,9 @@ function App({
         </Route>
         <Route path="/favorites">
           <Favorites favorites={favorites} />
+        </Route>
+        <Route path="/detail/:id">
+          </>
         </Route>
         <Route path="/search">
           <Search pokemon={filteredByName || {}} />

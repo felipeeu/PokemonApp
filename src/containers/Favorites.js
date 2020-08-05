@@ -7,9 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
-
-
+import { deleteFromFavorites, selectPokemon } from "../actions/index";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   icon: {
@@ -43,12 +42,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Favorites= ({favorites}) => {
+const Favorites = ({ favorites, deleteFromFavorites, selectPokemon }) => {
   const classes = useStyles();
-  console.log("NOS FAVORITOS PD",favorites)
+
   return (
     <React.Fragment>
-
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
@@ -73,20 +71,12 @@ const Favorites= ({favorites}) => {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button
-                    
-                    variant="outlined"
-                    color="primary"
-                  >
+                  <Button variant="outlined" color="primary">
                     Previous
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button
-                    
-                    variant="outlined"
-                    color="primary"
-                  >
+                  <Button variant="outlined" color="primary">
                     Next
                   </Button>
                 </Grid>
@@ -99,28 +89,27 @@ const Favorites= ({favorites}) => {
           <Grid container spacing={4}>
             {favorites &&
               favorites.map(pokemon => (
-                <Grid item key={pokemon.name} xs={12} sm={6} md={4}>
+                <Grid item key={pokemon.id} xs={12} sm={6} md={4}>
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardMedia}
                       image={`${pokemon.sprites.other.dream_world.front_default}`}
                       title={pokemon.name}
                     />
-                    {/* <CardContent className={classes.cardContent}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {pokemon.name}
-                      </Typography>
-                      <Typography>
-                        This is a media card. You can use this section to
-                        describe the content.
-                      </Typography>
-                    </CardContent> */}
                     <CardActions>
-                      <Button size="small" color="primary">
-                        View
+                      <Button
+                        onClick={() => selectPokemon(pokemon.id)}
+                        size="small"
+                        color="primary"
+                      >
+                        Detalhes
                       </Button>
-                      <Button size="small" color="primary">
-                        Edit
+                      <Button
+                        onClick={() => deleteFromFavorites(pokemon.id)}
+                        size="small"
+                        color="primary"
+                      >
+                        Deletar
                       </Button>
                     </CardActions>
                   </Card>
@@ -129,10 +118,15 @@ const Favorites= ({favorites}) => {
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      
     </React.Fragment>
   );
 };
 
-export default Favorites;
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteFromFavorites: id => dispatch(deleteFromFavorites(id)),
+    selectPokemon: pokemonId => dispatch(selectPokemon(pokemonId))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Favorites);
