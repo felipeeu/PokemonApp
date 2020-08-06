@@ -7,8 +7,7 @@ import {
   GET_FAVORITES,
   ADD_TO_FAVORITES,
   DELETE_FROM_FAVORITES,
-  SELECT_POKEMON,
- 
+  SELECT_POKEMON
 } from "../actions/index";
 
 const initialState = {
@@ -28,6 +27,7 @@ const pokemons = (state = initialState, action) => {
 
     case GET_POKEMON_BY_NAME:
       return {
+        ...state,
         pokemonByName: action.payload
       };
 
@@ -39,11 +39,15 @@ const pokemons = (state = initialState, action) => {
     }
 
     case ADD_TO_FAVORITES: {
+      console.log(action);
       return {
         ...state,
-        favorites: state.favorites
-          .filter(favorite => favorite.id !== action.payload.id)
-          .concat([action.payload])
+        favorites:
+          !state.favorites 
+            ? [action.payload]
+            : state.favorites
+                .filter(pokemon => pokemon.id !== action.payload.id)
+                .concat(action.payload)
       };
     }
 

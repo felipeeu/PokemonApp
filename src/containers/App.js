@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { withRouter, Route, Switch } from "react-router";
-import { Link } from "react-router-dom";
 import Home from "./Home";
 import Favorites from "./Favorites";
 import Search from "./Search";
@@ -18,6 +17,7 @@ import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
 import InputBase from "@material-ui/core/InputBase";
+import Grid from "@material-ui/core/Grid";
 import SearchIcon from "@material-ui/icons/Search";
 import { fade, makeStyles } from "@material-ui/core/styles";
 
@@ -68,6 +68,11 @@ const appStyles = makeStyles(theme => ({
   buttonSearch: {
     position: "absolute",
     right: "5px"
+  },
+  buttonFavorites: {
+    position: "absolute",
+    top: "20%",
+    right: "50px"
   }
 }));
 
@@ -95,12 +100,11 @@ function App({
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <Link to={"/"}>
+          <Grid onClick={() => history.push("/")}>
             <Typography variant="h6" color="secondary" noWrap>
               PokeDex
             </Typography>
-          </Link>
-
+          </Grid>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -129,13 +133,15 @@ function App({
           </Button>
         </Toolbar>
       </AppBar>
-      <Button
-        onClick={() => history.push("/favorites")}
-        variant="contained"
-        color="secondary"
-      >
-        favorites
-      </Button>
+      <Grid className={classes.buttonFavorites}>
+        <Button
+          onClick={() => history.push("/favorites")}
+          variant="contained"
+          color="secondary"
+        >
+          favorites
+        </Button>
+      </Grid>
       <Switch>
         <Route exact path="/">
           <Home
@@ -144,14 +150,14 @@ function App({
             setOffset={setOffset}
           />
         </Route>
+        <Route path="/search">
+          <Search pokemon={filteredByName || {}} />
+        </Route>
         <Route path="/favorites">
           <Favorites favorites={favorites} />
         </Route>
         <Route path="/details/:id">
           <Details pokemon={selectedPokemon} />
-        </Route>
-        <Route path="/search">
-          <Search pokemon={filteredByName || {}} />
         </Route>
       </Switch>
       <footer className={classes.footer}>

@@ -8,19 +8,29 @@ const PokemonDetail = ({ pokemon }) => {
     <Grid container spacing={3}>
       <Grid item xs={12} sm={6}>
         <Grid>
-          <Typography>Nome: </Typography>
-          {pokemon.name}
+          <Typography variant="subtitle1" color="primary" noWrap>
+            Name: {" "} {pokemon.name}
+          </Typography>
+          
+        </Grid>
+
+        <Grid >
+          <Typography variant="subtitle1" color="primary" noWrap>
+            Height: {" "}  {pokemon.height}
+          </Typography>
+         
+        </Grid>
+        <Grid>
+          <Typography variant="subtitle1" color="primary" noWraps>
+            Types:{" "}
+          </Typography>
+          {pokemon &&
+            pokemon.types.map(item => {
+              return <Grid>{item.type.name}</Grid>;
+            })}
         </Grid>
         <Grid>
           <img src={`${pokemon.sprites.other.dream_world.front_default}`} />
-        </Grid>
-        <Grid>
-          <Typography>Altura: </Typography>
-          {pokemon.height}{" "}
-        </Grid>
-        <Grid>
-          <Typography>Tipos: </Typography>
-          {/* {pokemon && pokemon.map(type => <span>{type}</span>)}{" "} */}
         </Grid>
       </Grid>
       <Grid item xs={12} sm={6}>
