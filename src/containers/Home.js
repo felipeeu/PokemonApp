@@ -4,6 +4,10 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import ArrowBack from "@material-ui/icons/ArrowBack";
+import ArrowForward from "@material-ui/icons/ArrowForward";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -11,7 +15,7 @@ import { connect } from "react-redux";
 import { addToFavorites, selectPokemon } from "../actions/index";
 import { withRouter } from "react-router";
 
-const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(theme => ({
   icon: {
     marginRight: theme.spacing(2)
   },
@@ -32,7 +36,8 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column"
   },
   cardMedia: {
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%", // 16:9
+    backgroundSize: 'contain',
   },
   cardContent: {
     flexGrow: 1
@@ -40,8 +45,12 @@ const useStyles = makeStyles(theme => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6)
+  },
+  cardActions: {
+    justifyContent: "space-between"
   }
 }));
+
 
 const Home = ({
   tenPokemons,
@@ -74,29 +83,27 @@ const Home = ({
               color="textSecondary"
               paragraph
             >
-              Sobre o catálogo
+              For Venturus Analysis
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button
+                  <IconButton
                     onClick={() =>
                       setOffset(offset === 0 || !offset ? 0 : offset - 10)
                     }
                     variant="outlined"
                     color="primary"
                   >
-                    Previous
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button
+                    <ArrowBack fontSize="large" />
+                  </IconButton>
+                  <IconButton
                     onClick={() => setOffset(offset + 10)}
                     variant="outlined"
                     color="primary"
                   >
-                    Next
-                  </Button>
+                    <ArrowForward fontSize="large" />
+                  </IconButton>
                 </Grid>
               </Grid>
             </div>
@@ -113,7 +120,7 @@ const Home = ({
                       className={classes.cardMedia}
                       image={`${pokemon.sprites.other.dream_world.front_default}`}
                     />
-                    <CardActions>
+                    <CardActions className={classes.cardActions}>
                       <Button
                         onClick={() => {
                           selectPokemon(pokemon.id);
@@ -122,15 +129,15 @@ const Home = ({
                         size="small"
                         color="primary"
                       >
-                        Detalhes
+                        Details
                       </Button>
-                      <Button
+                      <IconButton
                         onClick={() => addToFavorites(pokemon)}
                         size="small"
                         color="primary"
                       >
-                        Adicionar aos Favoritos
-                      </Button>
+                        <FavoriteIcon color="secondary" />
+                      </IconButton>
                     </CardActions>
                   </Card>
                 </Grid>

@@ -89,7 +89,7 @@ function App({
     getPokemons(offset, 10);
     resetStore();
   }, [offset]);
-  console.log("SELECTED POKE: ", selectedPokemon);
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -97,7 +97,7 @@ function App({
         <Toolbar>
           <Link to={"/"}>
             <Typography variant="h6" color="secondary" noWrap>
-              Catálogo de Pokemons
+              PokeDex
             </Typography>
           </Link>
 
@@ -125,7 +125,7 @@ function App({
             variant="text"
             className={classes.buttonSearch}
           >
-            Buscar
+            Search
           </Button>
         </Toolbar>
       </AppBar>
@@ -134,7 +134,7 @@ function App({
         variant="contained"
         color="secondary"
       >
-        favoritos
+        favorites
       </Button>
       <Switch>
         <Route exact path="/">
@@ -156,7 +156,7 @@ function App({
       </Switch>
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          By_Felipe_Domingues
         </Typography>
         <Typography
           variant="subtitle1"
@@ -164,7 +164,7 @@ function App({
           color="textSecondary"
           component="p"
         >
-          Something here to give the footer a purpose!
+          Made by Felipe Domingues using Material-UI!
         </Typography>
       </footer>
     </React.Fragment>

@@ -24,7 +24,7 @@ const isEmpty = obj => {
 
 const Details = ({ pokemon }) => {
   const classes = useStyles();
-console.log ( "DETAILS" ,pokemon)
+
   return (
     <React.Fragment>
       {!isEmpty(pokemon) ? (
@@ -46,7 +46,7 @@ console.log ( "DETAILS" ,pokemon)
           <Container className={classes.cardGrid} maxWidth="md">
             {/* End hero unit */}
             <Grid container spacing={4}>
-              <Grid item key={pokemon && pokemon.name} xs={12} sm={6} md={4}>
+              <Grid item key={pokemon && pokemon.name} xs={12} >
                 <Card className={classes.card}>
                   <PokemonDetails pokemon={pokemon}/>
                 </Card>

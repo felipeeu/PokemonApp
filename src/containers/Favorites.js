@@ -4,51 +4,26 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { deleteFromFavorites, selectPokemon } from "../actions/index";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { useStyles } from "./Home";
 
-const useStyles = makeStyles(theme => ({
-  icon: {
-    marginRight: theme.spacing(2)
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6)
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4)
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8)
-  },
-  card: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column"
-  },
-  cardMedia: {
-    paddingTop: "56.25%" // 16:9
-  },
-  cardContent: {
-    flexGrow: 1
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6)
-  }
-}));
-
-const Favorites = ({ favorites, deleteFromFavorites, selectPokemon }) => {
+const Favorites = ({
+  favorites,
+  deleteFromFavorites,
+  selectPokemon,
+  history
+}) => {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <main>
-        {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography
@@ -58,30 +33,8 @@ const Favorites = ({ favorites, deleteFromFavorites, selectPokemon }) => {
               color="textPrimary"
               gutterBottom
             >
-              PoKemons Favoritos
+              Favorites PoKemons
             </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="textSecondary"
-              paragraph
-            >
-              Sobre o catálogo
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Previous
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" color="primary">
-                    Next
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
@@ -96,21 +49,24 @@ const Favorites = ({ favorites, deleteFromFavorites, selectPokemon }) => {
                       image={`${pokemon.sprites.other.dream_world.front_default}`}
                       title={pokemon.name}
                     />
-                    <CardActions>
+                    <CardActions className={classes.cardActions}>
                       <Button
-                        onClick={() => selectPokemon(pokemon.id)}
+                        onClick={() => {
+                          selectPokemon(pokemon.id);
+                          history.push(`/details/${pokemon.id}`);
+                        }}
                         size="small"
                         color="primary"
                       >
-                        Detalhes
+                        Details
                       </Button>
-                      <Button
+                      <IconButton
                         onClick={() => deleteFromFavorites(pokemon.id)}
                         size="small"
                         color="primary"
                       >
-                        Deletar
-                      </Button>
+                        <DeleteIcon />
+                      </IconButton>
                     </CardActions>
                   </Card>
                 </Grid>
@@ -129,4 +85,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Favorites);
+export default withRouter(connect(null, mapDispatchToProps)(Favorites));

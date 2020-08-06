@@ -7,6 +7,7 @@ export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
 export const DELETE_FROM_FAVORITES = "DELETE_FROM_FAVORITES";
 export const SELECT_POKEMON = "SELECT_POKEMON";
 
+
 export const getPokemons = (offset, limit) => {
   return dispatch => {
     axios
@@ -79,3 +80,5 @@ export const selectPokemon = pokemonId => {
     });
   };
 };
+
+
