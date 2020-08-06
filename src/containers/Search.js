@@ -21,7 +21,7 @@ const isEmpty = obj => {
   return true;
 };
 
-const Search = ({ pokemon, history,addToFavorites, selectPokemon }) => {
+const Search = ({ pokemon, history, addToFavorites, selectPokemon }) => {
   const classes = useStyles();
 
   return (
@@ -45,8 +45,27 @@ const Search = ({ pokemon, history,addToFavorites, selectPokemon }) => {
           <Container className={classes.cardGrid} maxWidth="md">
             {/* End hero unit */}
             <Grid container spacing={4}>
-              <Grid item key={pokemon && pokemon.name} xs={12} >
+              <Grid item key={pokemon && pokemon.name} xs={12}>
                 <Card className={classes.card}>
+                  <CardActions className={classes.cardActions}>
+                    <Button
+                      onClick={() => {
+                        selectPokemon(pokemon.id);
+                        history.push(`/details/${pokemon.id}`);
+                      }}
+                      size="small"
+                      color="primary"
+                    >
+                      Details
+                    </Button>
+                    <IconButton
+                      onClick={() => addToFavorites(pokemon)}
+                      size="small"
+                      color="primary"
+                    >
+                      <FavoriteIcon color="secondary" />
+                    </IconButton>
+                  </CardActions>
                   <CardMedia
                     className={classes.cardMedia}
                     image={
@@ -56,25 +75,6 @@ const Search = ({ pokemon, history,addToFavorites, selectPokemon }) => {
                     title={pokemon && pokemon.name}
                   />
                 </Card>
-                <CardActions className={classes.cardActions}>
-                      <Button
-                        onClick={() => {
-                          selectPokemon(pokemon.id);
-                          history.push(`/details/${pokemon.id}`);
-                        }}
-                        size="small"
-                        color="primary"
-                      >
-                        Details
-                      </Button>
-                      <IconButton
-                        onClick={() => addToFavorites(pokemon)}
-                        size="small"
-                        color="primary"
-                      >
-                        <FavoriteIcon color="secondary" />
-                      </IconButton>
-                    </CardActions>
               </Grid>
             </Grid>
           </Container>
@@ -86,11 +86,6 @@ const Search = ({ pokemon, history,addToFavorites, selectPokemon }) => {
   );
 };
 
-// const mapStateToProps = store => ({
-//   tenPokemons: store.pokemons.tenPokemons,
-//   pokemon: store.pokemons.pokemon,
-//   favorites: store.pokemons.favorites
-// });
 
 const mapDispatchToProps = dispatch => {
   return {

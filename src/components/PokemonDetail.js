@@ -2,34 +2,92 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Stats from "./Stats";
+import { makeStyles } from "@material-ui/core/styles";
+
+export const pokemonDetailStyles = makeStyles(theme => ({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center"
+  },
+  attributeContainer: {
+    display: "flex",
+    flexDirection: "column",
+    paddingLeft: "50px"
+  },
+  attribute: {
+    display: "flex",
+    flexDirection: "row",
+    paddingLeft: "20px"
+  },
+  attributeData: {
+    paddingLeft: "10px"
+  },
+  imageContainer: {
+    display: "flex",
+    justifyContent: "center",
+    padding: "30px"
+  }
+}));
 
 const PokemonDetail = ({ pokemon }) => {
-  return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} sm={6}>
-        <Grid>
-          <Typography variant="subtitle1" color="primary" noWrap>
-            Name: {" "} {pokemon.name}
-          </Typography>
-          
-        </Grid>
+  const classes = pokemonDetailStyles();
 
-        <Grid >
-          <Typography variant="subtitle1" color="primary" noWrap>
-            Height: {" "}  {pokemon.height}
-          </Typography>
-         
+  return (
+    <Grid container>
+      <Grid className={classes.container} item xs={12} sm={6}>
+        <Grid className={classes.attributeContainer}>
+          <Grid className={classes.attribute}>
+            <Typography variant="h4" color="primary" noWrap>
+              Name:{" "}
+            </Typography>
+            <Typography
+              className={classes.attributeData}
+              variant="h5"
+              color="secondary "
+              noWrap
+            >
+              {" "}
+              {pokemon.name}{" "}
+            </Typography>
+          </Grid>
+
+          <Grid className={classes.attribute}>
+            <Typography variant="h4" color="primary" noWrap>
+              Height:{" "}
+            </Typography>
+            <Typography
+              className={classes.attributeData}
+              variant="h5"
+              color="secondary "
+              noWrap
+            >
+              {pokemon.height}
+            </Typography>
+          </Grid>
+          <Grid className={classes.attribute}>
+            <Typography variant="h4" color="primary" noWraps>
+              Types:{" "}
+            </Typography>
+            {pokemon &&
+              pokemon.types.map(item => {
+                return (
+                  <Grid className={classes.attributeData}>
+                    {" "}
+                    <Typography
+                      className={classes.attributeData}
+                      variant="h5"
+                      color="secondary "
+                      noWrap
+                    >
+                      {item.type.name}{" "}
+                    </Typography>
+                  </Grid>
+                );
+              })}
+          </Grid>
         </Grid>
-        <Grid>
-          <Typography variant="subtitle1" color="primary" noWraps>
-            Types:{" "}
-          </Typography>
-          {pokemon &&
-            pokemon.types.map(item => {
-              return <Grid>{item.type.name}</Grid>;
-            })}
-        </Grid>
-        <Grid>
+        <Grid className={classes.imageContainer}>
           <img src={`${pokemon.sprites.other.dream_world.front_default}`} />
         </Grid>
       </Grid>
@@ -42,12 +100,4 @@ const PokemonDetail = ({ pokemon }) => {
 
 export default PokemonDetail;
 
-//     - Nome -> pokemon.name
-//     - Imagem -> pokemon.sprites.other.dream_world.front_default
-//     - Altura -> pokemon.height
-//     - Lista de Tipos ->  pokemon.types (array)
-//     - Velocidade ->stats
-//     - Defesa -> stats
-//     - Ataque -> stats
-//     - HP ->stats
-//     - Passos da Evolução ->
+

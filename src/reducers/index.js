@@ -22,7 +22,9 @@ const pokemons = (state = initialState, action) => {
     case GET_POKEMONS:
       return {
         ...state,
-        tenPokemons: state.tenPokemons.concat([action.payload])
+        tenPokemons: !state.tenPokemons
+          ? [action.payload]
+          : state.tenPokemons.concat([action.payload])
       };
 
     case GET_POKEMON_BY_NAME:
@@ -39,15 +41,13 @@ const pokemons = (state = initialState, action) => {
     }
 
     case ADD_TO_FAVORITES: {
-      console.log(action);
       return {
         ...state,
-        favorites:
-          !state.favorites 
-            ? [action.payload]
-            : state.favorites
-                .filter(pokemon => pokemon.id !== action.payload.id)
-                .concat(action.payload)
+        favorites: !state.favorites
+          ? [action.payload]
+          : state.favorites
+              .filter(pokemon => pokemon.id !== action.payload.id)
+              .concat(action.payload)
       };
     }
 
